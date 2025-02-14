@@ -1,30 +1,32 @@
 name: workflow 1
-run-name: run - ${{ inputs.name }}
+run-name: run - ${{ inputs.environment }} - ${{ inputs.api }}
 on:
   workflow_dispatch:
     inputs:
-      name:
-        description: "what's your name"
+      api:
+        description: "api"
         required: true
-        type: choice
-        options:
-          - John
-          - James
-          - Paul
+        type: string
+      environment:
+        description: "environment"
+        required: true
+        type: environment
 jobs:
   job1:
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
-    if: "inputs.name != ''"
+    if: "inputs.environment != ''"
     steps:
-      - run: echo "hello ${{ inputs.name }}"
+      - run: echo "hello ${{ vars.NAME }}"
   job2:
     defaults:
       run:
         shell: python
+    environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
-    if: "inputs.name != ''"
+    if: "inputs.environment != ''"
     steps:
       - name: checkout
         uses: actions/checkout@v4
       - run: |
-          print("hello ${{ inputs.name }}")
+          print("hello ${{ vars.NAME }}")
