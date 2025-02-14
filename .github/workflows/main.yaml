@@ -15,6 +15,7 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-latest
+    if: "inputs.name != ''"
     steps:
       - run: echo "hello ${{ inputs.name }}"
   job2:
@@ -22,6 +23,7 @@ jobs:
       run:
         shell: python
     runs-on: ubuntu-latest
+    if: "inputs.name != ''"
     steps:
       - name: checkout
         uses: actions/checkout@v4
