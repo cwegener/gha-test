@@ -1,11 +1,22 @@
 name: workflow 1
 run-name: ${{ github.actor }} test
-on: [push]
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "what's your name"
+        required: true
+        type: choice
+        options:
+          - John
+          - James
+          - Paul
 jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "triggered by a ${{ github.event_name }} event."
+      - run: echo "hello ${{ inputs.name }}"
   job2:
     defaults:
       run:
@@ -15,4 +26,4 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
       - run: |
-          print("hello world")
+          print("hello ${{ inputs.name }}")
