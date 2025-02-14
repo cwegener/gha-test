@@ -1,5 +1,5 @@
 name: workflow 1
-run-name: ${{ github.actor }} test
+run-name: run - ${{ inputs.name }}
 on:
   push:
   workflow_dispatch:
