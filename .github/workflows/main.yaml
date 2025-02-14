@@ -6,5 +6,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "triggered by a ${{ github.event_name }} event."
+  job2:
+    defaults:
+      run:
+        shell: python
+    runs-on: ubuntu-latest
+    steps:
       - name: checkout
         uses: actions/checkout@v4
+      - run: |
+          print("hello world")
