@@ -7,6 +7,7 @@ variable "provider_token" {
 }
 
 module "vpc" {
-  source         = "../modules/vpc"
+  # tflint-ignore: terraform_module_pinned_source
+  source         = "github.com/cwegener/gha-test.git//modules/vpc?ref=master"
   provider_token = var.provider_token
 }
