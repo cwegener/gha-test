@@ -17,7 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     if: "inputs.environment != ''"
     steps:
-      - run: echo "hello ${{ vars.NAME }}"
+      - run: |
+          echo "hello ${{ vars.NAME }}" && \
+          ls ${{ github.workspace }} && \
+          ls ${{ runner.temp }}
   job2:
     defaults:
       run:
@@ -29,4 +32,7 @@ jobs:
       - name: checkout
         uses: actions/checkout@v4
       - run: |
+          import os
           print("hello ${{ vars.NAME }}")
+          print("workspace ${{ github.workspace }}")
+          print(os.getenv("GITHUB_WORKSPACE"))
