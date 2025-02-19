@@ -58,7 +58,8 @@ jobs:
         run: |
           git config --global url."https://oauth2:${{ secrets.GITHUB_TOKEN }}@github.com".insteadOf https://github.com && \
           terraform -chdir=infra/${{ inputs.environment }} init \
-          -backend-config="storage_account_name=${{ secrets.TF_STATE_STORAGE_ACCOUNT }}"
+          -backend-config="storage_account_name=${{ secrets.TF_STATE_STORAGE_ACCOUNT }}" \
+          -backend-config="resource_group_name=${{ vars.TF_STATE_RESOURCE_GROUP_NAME }}"
 
       - name: terraform plan
         run: terraform -chdir=infra/${{ inputs.environment }} plan -no-color
