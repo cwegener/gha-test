@@ -36,3 +36,21 @@ jobs:
           print("hello ${{ vars.NAME }}")
           print("workspace ${{ github.workspace }}")
           print(os.getenv("GITHUB_WORKSPACE"))
+  job3:
+    env:
+      TF_VAR_provider_token: test
+    environment: ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    if: "inputs.environment != ''"
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: setup terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: terraform init
+        run: |
+          git config --global url."https://oauth2:${{ secrets.GITHUB_TOKEN }}@github.com".insteadOf https://github.com && \
+          terraform -chdir=infra/${{ inputs.environment }} init
+
+      - name: terraform plan
+        run: terraform -chdir=infra/${{ inputs.environment }} plan -no-color
