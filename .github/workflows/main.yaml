@@ -38,6 +38,10 @@ jobs:
           print(os.getenv("GITHUB_WORKSPACE"))
   job3:
     env:
+      ARM_USE_OIDC: true
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.ARM_SUBSCRIPTION_ID }}
       TF_VAR_provider_token: test
     environment: ${{ inputs.environment }}
     runs-on: ubuntu-latest
@@ -50,7 +54,8 @@ jobs:
       - name: terraform init
         run: |
           git config --global url."https://oauth2:${{ secrets.GITHUB_TOKEN }}@github.com".insteadOf https://github.com && \
-          terraform -chdir=infra/${{ inputs.environment }} init
+          terraform -chdir=infra/${{ inputs.environment }} init \
+          -backend-config="storage_account_name=${{ secrets.TF_STATE_STORAGE_ACCOUNT }}"
 
       - name: terraform plan
         run: terraform -chdir=infra/${{ inputs.environment }} plan -no-color
