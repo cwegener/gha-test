@@ -11,4 +11,4 @@ jobs:
       uses: docker/build-push-action@v6
       with:
         push: true
-        tags: reg2.redhive.me/my-web-app:latest
+        tags: reg2.redhive.me/my-web-app:latest,reg2.redhive.me/my-web-app:${{ github.sha }}
