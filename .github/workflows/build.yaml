@@ -1,0 +1,14 @@
+name: ci
+
+on:
+  push:
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build and push
+      uses: docker/build-push-action@v6
+      with:
+        push: false
+        tags: my-web-app:latest
