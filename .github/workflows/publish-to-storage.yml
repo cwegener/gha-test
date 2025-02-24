@@ -39,7 +39,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
-    - uses: actions/checkout@v4
     - name: Download build artifacts
       uses: actions/download-artifact@v4
       with:
@@ -56,7 +55,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-          az storage blob upload-batch --account-name ${{ vars.UI_STORAGE_ACCOUNT }} --auth-mode login -d '$web' -s ui/build
+          az storage blob upload-batch --account-name ${{ vars.UI_STORAGE_ACCOUNT }} --auth-mode login -d '$web' -s .
 
   # Azure logout
     - name: logout
