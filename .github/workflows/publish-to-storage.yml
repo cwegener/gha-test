@@ -55,7 +55,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-          az storage blob upload-batch --account-name ${{ vars.UI_STORAGE_ACCOUNT }} --auth-mode login -d '$web' -s .
+          az storage blob upload-batch --overwrite --account-name ${{ vars.UI_STORAGE_ACCOUNT }} --auth-mode login -d '$web' -s .
 
   # Azure logout
     - name: logout
