@@ -12,12 +12,12 @@ permissions:
   id-token: write
   contents: read
 
-defaults:
-  run:
-    working-directory: ui
 
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: ui
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -55,7 +55,7 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-          az storage blob upload-batch --account-name ${{ vars.UI_STORAGE_ACCOUNT }} --auth-mode login -d '$web' -s ui-build
+          az storage blob upload-batch --account-name ${{ vars.UI_STORAGE_ACCOUNT }} --auth-mode login -d '$web' -s ui/build
 
   # Azure logout
     - name: logout
