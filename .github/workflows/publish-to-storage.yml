@@ -45,6 +45,7 @@ jobs:
       with:
         name: ui-build
 
+    - run: tree
     - uses: azure/login@v2
       with:
         client-id: ${{ secrets.ARM_CLIENT_ID }}
