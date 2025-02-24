@@ -20,6 +20,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: install dependencies
+      run: npm install
+
     - name: build assets
       run: npm run build
 
