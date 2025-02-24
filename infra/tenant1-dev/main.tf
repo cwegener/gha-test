@@ -7,7 +7,7 @@ variable "provider_token" {
 }
 
 variable = "unused" {
-  default         = "slkgjlkfdg"      
+  default         = "slkgjlkfdg"
 }
 
 module "vpc" {
