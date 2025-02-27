@@ -78,7 +78,15 @@ jobs:
         --resource-group ${{ secrets.AKS_CLUSTER_RESOURCE_GROUP }} \
         --name ${{ secrets.AKS_CLUSTER_NAME }} \
         --overwrite-existing && \
-        terraform -chdir=infra/${{ inputs.environment }} plan -no-color
+        terraform -chdir=infra/${{ inputs.environment }} plan -no-color -out=tfplan
+
+    - name: terraform apply
+      run: |
+        az aks get-credentials \
+        --resource-group ${{ secrets.AKS_CLUSTER_RESOURCE_GROUP }} \
+        --name ${{ secrets.AKS_CLUSTER_NAME }} \
+        --overwrite-existing && \
+        terraform -chdir=infra/${{ inputs.environment }} apply -no-color tfplan
 
   # Azure logout
     - name: logout
