@@ -24,6 +24,8 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
     steps:
+    - name: checkout
+      uses: actions/checkout@v4
     - uses: azure/login@v2
       with:
         client-id: ${{ secrets.ARM_CLIENT_ID }}
