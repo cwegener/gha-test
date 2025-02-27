@@ -74,18 +74,20 @@ jobs:
 
     - name: terraform plan
       run: |
+        [ "$(az aks list --query "[?name=='${{ secrets.AKS_CLUSTER_NAME }}'].name" -o tsv)" = "${{ secrets.AKS_CLUSTER_NAME }}" ] && \
         az aks get-credentials \
         --resource-group ${{ secrets.AKS_CLUSTER_RESOURCE_GROUP }} \
         --name ${{ secrets.AKS_CLUSTER_NAME }} \
-        --overwrite-existing && \
+        --overwrite-existing
         terraform -chdir=infra/${{ inputs.environment }} plan -no-color -out=tfplan
 
     - name: terraform apply
       run: |
+        [ "$(az aks list --query "[?name=='${{ secrets.AKS_CLUSTER_NAME }}'].name" -o tsv)" = "${{ secrets.AKS_CLUSTER_NAME }}" ] && \
         az aks get-credentials \
         --resource-group ${{ secrets.AKS_CLUSTER_RESOURCE_GROUP }} \
         --name ${{ secrets.AKS_CLUSTER_NAME }} \
-        --overwrite-existing && \
+        --overwrite-existing
         terraform -chdir=infra/${{ inputs.environment }} apply -no-color tfplan
 
   # Azure logout
