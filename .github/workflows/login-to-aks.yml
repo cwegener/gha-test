@@ -15,6 +15,11 @@ permissions:
 jobs:
   login:
     env:
+      ARM_USE_OIDC: true
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_TENANT_ID: ${{ vars.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ vars.ARM_SUBSCRIPTION_ID }}
+      TF_VAR_provider_token: test
       KUBE_CONFIG_PATH: ~/.kube/config
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
@@ -58,6 +63,20 @@ jobs:
         --overwrite-existing && \
         kubectl get nodes
 
+    - name: terraform init
+      run: |
+        git config --global url."https://oauth2:${{ secrets.GITHUB_TOKEN }}@github.com".insteadOf https://github.com && \
+        terraform -chdir=infra/${{ inputs.environment }} init \
+        -backend-config="storage_account_name=${{ secrets.TF_STATE_STORAGE_ACCOUNT }}" \
+        -backend-config="resource_group_name=${{ vars.TF_STATE_RESOURCE_GROUP_NAME }}"
+
+    - name: terraform plan
+      run: |
+        az aks get-credentials \
+        --resource-group ${{ secrets.AKS_CLUSTER_RESOURCE_GROUP }} \
+        --name ${{ secrets.AKS_CLUSTER_NAME }} \
+        --overwrite-existing && \
+        terraform -chdir=infra/${{ inputs.environment }} plan -no-color
 
   # Azure logout
     - name: logout
