@@ -8,16 +8,6 @@ terraform {
   }
 }
 
-variable "provider_token" {
-  type = string
-}
-
-module "vpc" {
-  # tflint-ignore: terraform_module_pinned_source
-  source         = "github.com/cwegener/gha-test.git//modules/vpc?ref=master"
-  provider_token = var.provider_token
-}
-
 resource "helm_release" "example" {
   name       = "my-redis-release"
   repository = "oci://registry-1.docker.io/bitnamicharts"
