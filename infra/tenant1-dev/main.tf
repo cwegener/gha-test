@@ -20,7 +20,7 @@ module "vpc" {
 
 resource "helm_release" "example" {
   name       = "my-redis-release"
-  repository = "https://charts.bitnami.com/bitnami"
+  repository = "oci://registry-1.docker.io/bitnamicharts"
   chart      = "redis"
   version    = "7.4.2"
 }
