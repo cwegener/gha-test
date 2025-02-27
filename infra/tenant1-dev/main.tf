@@ -22,5 +22,5 @@ resource "helm_release" "example" {
   name       = "my-redis-release"
   repository = "oci://registry-1.docker.io/bitnamicharts"
   chart      = "redis"
-  version    = "7.4.2"
+  version    = "20.9.0"
 }
