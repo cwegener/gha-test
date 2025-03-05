@@ -59,7 +59,7 @@ jobs:
           --content-cache-control "public, max-age=31536000, immutable" \
           --account-name ${{ vars.UI_STORAGE_ACCOUNT }} \
           --auth-mode login \
-          -d '$web' -s .
+          -d '$web' -s . && \
           az storage blob update \
           --content-cache-control "public, max-age=31536000, immutable" \
           --account-name ${{ vars.UI_STORAGE_ACCOUNT }} \
