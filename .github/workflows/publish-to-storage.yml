@@ -55,7 +55,17 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-          az storage blob upload-batch --overwrite --account-name ${{ vars.UI_STORAGE_ACCOUNT }} --auth-mode login -d '$web' -s .
+          az storage blob upload-batch --overwrite \
+          --content-cache-control "public, max-age=31536000, immutable" \
+          --account-name ${{ vars.UI_STORAGE_ACCOUNT }} \
+          --auth-mode login \
+          -d '$web' -s .
+          az storage blob update \
+          --content-cache-control "public, max-age=31536000, immutable" \
+          --account-name ${{ vars.UI_STORAGE_ACCOUNT }} \
+          --auth-mode login \
+          --container '$web' \
+          --name index.html
 
   # Azure logout
     - name: logout
