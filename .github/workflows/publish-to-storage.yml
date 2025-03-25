@@ -70,8 +70,6 @@ jobs:
           --name index.html
 
     - name:
-      env:
-        ZZZZZZZZZZZZ: "testtest"
       run: |
         env | sort -n
   # Azure logout
