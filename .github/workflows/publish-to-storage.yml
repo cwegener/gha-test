@@ -69,7 +69,10 @@ jobs:
           --container '$web' \
           --name index.html
 
-    - run: env
+    - name:
+      env:
+        TF_VAR_testing: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      run: env
   # Azure logout
     - name: logout
       run: |
