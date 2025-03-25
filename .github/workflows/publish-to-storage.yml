@@ -71,7 +71,6 @@ jobs:
 
     - name:
       env:
-        TF_VAR_testing: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ZZZZZZZZZZZZ: "testtest"
       run: |
         env | sort -n
