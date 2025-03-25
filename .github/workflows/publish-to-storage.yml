@@ -38,6 +38,8 @@ jobs:
       - build
     runs-on: ubuntu-latest
     environment: ${{ inputs.environment }}
+    env:
+      TF_VAR_testing: ${{ secrets.ARM_SUBSCRIPTION_ID }}
     steps:
     - name: Download build artifacts
       uses: actions/download-artifact@v4
@@ -67,6 +69,7 @@ jobs:
           --container '$web' \
           --name index.html
 
+    - run: env
   # Azure logout
     - name: logout
       run: |
