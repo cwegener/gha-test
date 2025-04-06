@@ -1,0 +1,12 @@
+on:
+  push:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: downcase REPO
+      run: |
+        echo "REPO=${GITHUB_REPOSITORY@L}" >> "${GITHUB_ENV}"
+    - name: echo
+      run: |
+        echo "${{ env.REPO }}"
