@@ -15,8 +15,11 @@ jobs:
         registry: atlastixngdev.azurecr.io
         username: ${{ secrets.ACR_TOKEN }}
         password: ${{ secrets.ACR_PASSWORD }}
+    - name: tag name
+      id: tagname
+      run: TAG=${{ github.ref }}; echo "TAG=${TAG##*/}" >> "$GITHUB_OUTPUT"
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
         push: false
-        tags: reg2.redhive.me/my-web-app:${{ github.ref }},reg2.redhive.me/my-web-app:latest,reg2.redhive.me/my-web-app:${{ github.sha }},atlastixngdev.azurecr.io/atlastix/my-web-app:latest
+        tags: reg2.redhive.me/my-web-app:test-${{ steps.tagname.outputs.TAG }},reg2.redhive.me/my-web-app:latest,reg2.redhive.me/my-web-app:${{ github.sha }},atlastixngdev.azurecr.io/atlastix/my-web-app:latest
