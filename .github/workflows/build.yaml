@@ -16,5 +16,5 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v6
       with:
-        push: true
+        push: false
         tags: reg2.redhive.me/my-web-app:latest,reg2.redhive.me/my-web-app:${{ github.sha }},atlastixngdev.azurecr.io/atlastix/my-web-app:latest
