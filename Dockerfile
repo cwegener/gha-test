@@ -6,7 +6,7 @@ SHELL ["sh", "-exc"]
 ### This should be a separate build container for better reuse.
 
 RUN <<EOT
-apt-get update -qy
+apt-get update -qy && \
 apt-get install -qyy \
     -o APT::Install-Recommends=false \
     -o APT::Install-Suggests=false \
@@ -21,7 +21,7 @@ RUN <<EOT
 install -dm 755 /etc/apt/keyrings
 wget -qO - https://mise.jdx.dev/gpg-key.pub | gpg --dearmor > /etc/apt/keyrings/mise-archive-keyring.gpg
 echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.gpg arch=amd64] https://mise.jdx.dev/deb stable main" > /etc/apt/sources.list.d/mise.list
-apt-get update -qy
+apt-get update -qy && \
 apt-get install -qyy \
     -o APT::Install-Recommends=false \
     -o APT::Install-Suggests=false \
@@ -40,7 +40,13 @@ RUN mise exec go@1.23 -- go build main.go
 
 FROM docker.io/ubuntu:noble
 
-RUN apt-get update
+RUN <<EOT
+apt-get update -qy && \
+apt-get install -qyy \
+    -o APT::Install-Recommends=false \
+    -o APT::Install-Suggests=false \
+    ca-certificates
+EOT
 
 RUN apt-get clean autoclean
 
