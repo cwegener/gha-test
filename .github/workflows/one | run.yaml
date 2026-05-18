@@ -1,0 +1,9 @@
+name: one | test
+on:
+  push:
+    branches:
+    -  master
+  workflow_dispatch:
+jobs:
+  runjob:
+    uses: ./.github/workflows/one | test.yaml
