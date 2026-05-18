@@ -1,3 +1,4 @@
+name: one | test
 on:
   push:
     branches:
